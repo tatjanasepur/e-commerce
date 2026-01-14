@@ -13,21 +13,16 @@ class ProductsIndex extends Component
     {
         $user = Auth::user();
         if (!$user) {
-            return; // safety (middleware already protects)
+            return;
         }
 
         $product = Product::findOrFail($productId);
 
-        // Create cart if missing
         $cart = $user->cart()->firstOrCreate([]);
 
-        // Find existing item for this product
         $item = $cart->items()->where('product_id', $productId)->first();
-
-        // Current quantity in cart
         $currentQty = $item ? $item->quantity : 0;
 
-        // Stock check
         if ($currentQty >= $product->stock_quantity) {
             session()->flash('error', 'Not enough stock.');
             return;
@@ -51,6 +46,6 @@ class ProductsIndex extends Component
     {
         return view('livewire.products-index', [
             'products' => Product::orderBy('name')->get(),
-        ]);
+        ])->layout('components.layouts.app'); // OVO JE FIX
     }
 }

@@ -4,14 +4,12 @@
         <a href="/products" class="text-sm underline">← Back to products</a>
     </div>
 
-    {{-- SUCCESS --}}
     @if (session('success'))
         <div class="mb-4 p-3 rounded bg-green-100 text-green-800">
             {{ session('success') }}
         </div>
     @endif
 
-    {{-- ERROR --}}
     @if (session('error'))
         <div class="mb-4 p-3 rounded bg-red-100 text-red-800">
             {{ session('error') }}
@@ -65,10 +63,17 @@
             @endforeach
         </div>
 
-        <div class="mt-6 flex items-center justify-end">
+        <div class="mt-6 flex items-center justify-between gap-4">
             <div class="text-lg font-bold">
                 Total: {{ number_format($total, 0) }} RSD
             </div>
+
+            <button
+                wire:click="placeOrder"
+                class="px-5 py-3 rounded bg-black text-white hover:bg-gray-800 transition"
+            >
+                Place order
+            </button>
         </div>
     @endif
 </div>
